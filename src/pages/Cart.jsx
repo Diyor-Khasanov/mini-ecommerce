@@ -52,7 +52,6 @@ export default function CartPage() {
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      <Header />
 
       <div className="max-w-5xl mx-auto px-4 py-10">
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10">

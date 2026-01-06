@@ -8,37 +8,36 @@ import Cart from "./pages/Cart.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Products from "./pages/Products.jsx";
 import Details from "./pages/Details.jsx";
-import About from "./pages/About.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/about",
-    element: <About />,
-  },
-  {
-    path: "/user-cart",
-    element: <Cart />,
-  },
-  {
-    path: "products",
-    element: <Products />,
-  },
-  {
-    path: "/product/:id",
-    element: <Details />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "/user-cart",
+        element: <Cart />,
+      },
+      {
+        path: "products",
+        element: <Products />,
+      },
+      {
+        path: "/product/:id",
+        element: <Details />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router}>
-    <App />
-  </RouterProvider>
+  <RouterProvider router={router} />
 );

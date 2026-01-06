@@ -6,22 +6,20 @@ import Loading from "../components/Loading";
 
 const Products = () => {
   const MY_API_KEY = "https://695cdeec79f2f34749d62810.mockapi.io/products";
-
   let navigate = useNavigate();
   let [data, setData] = useState([]);
   let [filteredData, setFilteredData] = useState([]);
   let [limit, setLimit] = useState(10);
   let [loading, setLoading] = useState(true);
-
   let [search, setSearch] = useState("");
   let [category, setCategory] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      let products = await axios.get(
-        `https://dummyjson.com/products?limit=${limit}`
-      );
       try {
+        let products = await axios.get(
+          `https://dummyjson.com/products?limit=${limit}`
+        );
         setData(products.data.products);
         setFilteredData(products.data.products);
       } catch (error) {
@@ -47,29 +45,20 @@ const Products = () => {
     let result = data.filter((product) =>
       product.title.toLowerCase().includes(search.toLowerCase())
     );
-
     if (category) {
       result = result.filter((product) => product.category === category);
     }
-
     setFilteredData(result);
   };
 
   const handleCategoryChange = (value) => {
     setCategory(value);
-
     let result = data;
-
-    if (value) {
-      result = result.filter((p) => p.category === value);
-    }
-
-    if (search) {
+    if (value) result = result.filter((p) => p.category === value);
+    if (search)
       result = result.filter((p) =>
         p.title.toLowerCase().includes(search.toLowerCase())
       );
-    }
-
     setFilteredData(result);
   };
 
@@ -79,7 +68,6 @@ const Products = () => {
       const existingItem = res.data.find(
         (item) => item.title === product.title
       );
-
       if (existingItem) {
         await axios.put(`${MY_API_KEY}/${existingItem.id}`, {
           ...existingItem,
@@ -107,18 +95,14 @@ const Products = () => {
 
   const categories = [...new Set(data.map((p) => p.category))];
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
 
   return (
-    <div className="flex flex-col gap-6 items-center justify-center">
-      <Header />
-
-      {/* SEARCH & FILTER */}
-      <header className="flex items-center justify-around mt-4 w-full">
+    <div className="px-4 py-6 md:px-10 md:py-10 bg-gray-50 min-h-screen">
+      {/* Search & Filter */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <form
-          className="flex items-center gap-2 w-1/2"
+          className="flex gap-2 w-full md:w-1/2"
           onSubmit={(e) => {
             e.preventDefault();
             handleSearch();
@@ -129,18 +113,18 @@ const Products = () => {
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="p-2 rounded pr-24 border-2 border-violet-600 focus:outline-violet-200 focus:outline-2"
+            className="p-2 rounded-md w-full border-2 border-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-400"
           />
           <button
             type="submit"
-            className="bg-purple-600 text-white px-6 py-2 rounded font-semibold"
+            className="bg-purple-600 text-white px-4 md:px-6 py-2 rounded-md font-semibold hover:bg-purple-700 transition-colors"
           >
             Search
           </button>
         </form>
 
         <select
-          className="p-2 rounded"
+          className="p-2 rounded-md w-full md:w-1/4 border border-gray-300"
           value={category}
           onChange={(e) => handleCategoryChange(e.target.value)}
         >
@@ -151,33 +135,39 @@ const Products = () => {
             </option>
           ))}
         </select>
-      </header>
+      </div>
 
-      {/* PRODUCTS */}
-      <div className="grid grid-cols-5 gap-4 px-24 py-6">
+      {/* Products Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
         {filteredData.map((product) => (
           <div
-            className="col-span-1 shadow-lg rounded-lg p-4 shadow-violet-200 border border-violet-400"
             key={product.id}
+            className="bg-stone-100 rounded-lg shadow-lg border border-gray-200 p-4 flex flex-col items-center gap-3 transition-colors"
           >
-            <img src={product.images[0]} alt={product.title} />
-            <strong>${product.price}</strong>
-            <p>{product.title}</p>
-            <p className="p-2 font-semibold text-xl">
+            <img
+              src={product.images[0]}
+              alt={product.title}
+              className="w-full h-48 object-cover rounded-md"
+            />
+            <h2 className="font-semibold text-lg text-black text-center">
+              {product.title}
+            </h2>
+            <p className="text-violet-600 font-bold">${product.price}</p>
+            <p className="text-gray-500 text-sm text-center">
               Category:{" "}
               {product.category[0].toUpperCase() + product.category.slice(1)}
             </p>
 
             <button
               onClick={() => navigateToDetails(product.id)}
-              className="mt-4 hover:underline text-purple-600 font-semibold mx-auto block"
+              className="mt-2 text-purple-600 hover:underline font-semibold"
             >
               Details
             </button>
 
             <button
               onClick={() => addToCart(product)}
-              className="mt-4 bg-purple-600 text-white px-6 py-2 rounded font-semibold w-full"
+              className="mt-2 w-full bg-purple-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-purple-700 transition-colors"
             >
               Add To Cart
             </button>
@@ -185,12 +175,15 @@ const Products = () => {
         ))}
       </div>
 
-      <button
-        className="mt-4 bg-purple-600 text-white rounded font-semibold text-xl px-8 py-3 my-3"
-        onClick={handleShowMore}
-      >
-        Show More
-      </button>
+      {/* Show More */}
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={handleShowMore}
+          className="bg-purple-600 text-white rounded-md font-semibold text-lg px-6 py-2 hover:bg-purple-700 transition-colors"
+        >
+          Show More
+        </button>
+      </div>
     </div>
   );
 };

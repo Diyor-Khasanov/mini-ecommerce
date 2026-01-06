@@ -1,6 +1,6 @@
-import React from 'react'
-import Footer from './Footer'
-import Header from './Header'
+import React from "react";
+import Footer from "./Footer";
+import Header from "../components/Header";
 
 const Home = () => {
   return (
@@ -9,7 +9,7 @@ const Home = () => {
       <h1>Hello everyone</h1>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

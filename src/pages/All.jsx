@@ -1,5 +1,5 @@
-import React from 'react'
-import Header from './Header'
+import React from "react";
+import Header from "../components/Header";
 
 const All = () => {
   return (
@@ -7,7 +7,7 @@ const All = () => {
       <Header />
       All
     </div>
-  )
-}
+  );
+};
 
-export default All
+export default All;

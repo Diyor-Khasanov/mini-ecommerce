@@ -4,7 +4,6 @@ export default function Header() {
   const links = [
     { name: "Home", path: "/" },
     { name: "All Products", path: "/products" },
-    { name: "Categories", path: "/categories" },
     { name: "User Cart", path: "/user-cart" },
     { name: "About", path: "/about" },
   ];

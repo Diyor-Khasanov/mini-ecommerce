@@ -9,8 +9,6 @@ import NotFound from "./pages/NotFound.jsx";
 import Products from "./pages/Products.jsx";
 import Details from "./pages/Details.jsx";
 import About from "./pages/About.jsx";
-import Categories from "./pages/Categories.jsx";
-import CategoryDetails from "./pages/CategoryDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,14 +30,6 @@ const router = createBrowserRouter([
   {
     path: "/product/:id",
     element: <Details />,
-  },
-  {
-    path: "/categories",
-    element: <Categories />,
-  },
-  {
-    path: "/category/:id",
-    element: <CategoryDetails />,
   },
   {
     path: "*",

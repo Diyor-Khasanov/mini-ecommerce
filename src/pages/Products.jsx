@@ -2,8 +2,11 @@ import axios from "axios";
 import { Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 const Products = () => {
+  const MY_API_KEY = 'https://695cdeec79f2f34749d62810.mockapi.io/products'
+
   let navigate = useNavigate();
   let [data, setData] = useState([]);
   let [limit, setLimit] = useState(10);
@@ -27,8 +30,21 @@ const Products = () => {
     navigate(`/product/${id}`);
   };
 
+  const addToCart = async (product) => {
+    alert(`${product.title} added to cart`)
+    await axios.post(MY_API_KEY, {
+      title: product.title,
+      price: product.price,
+      description: product.description,
+      brand: product.brand,
+      category: product.category,
+      thumbnail: product.thumbnail,
+    })
+  }
+
   return (
     <div className="flex flex-col gap-6 items-center justify-center">
+      <Header />
       <header className="flex items-center justify-around mt-4 w-full">
         <form className="flex items-center gap-2 w-1/2" onSubmit={(e) => e.preventDefault()}>
           <input
@@ -63,9 +79,15 @@ const Products = () => {
               </p>
               <button
                 onClick={() => navigateToDetails(product.id)}
-                className="mt-4 bg-purple-600 text-white px-6 py-2 rounded font-semibold w-full"
+                className="mt-4 cursor-pointer hover:underline text-purple-600 px-6 py-2 rounded font-semibold w-full"
               >
                 Details
+              </button>
+              <button
+                onClick={() => addToCart(product)}
+                className="mt-4 bg-purple-600 text-white px-6 py-2 rounded font-semibold w-full"
+              >
+                Add To Cart
               </button>
             </div>
           );

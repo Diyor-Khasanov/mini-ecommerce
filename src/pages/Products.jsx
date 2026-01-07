@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
 import Loading from "../components/Loading";
+import useTheme from "../context/useTheme";
 
 const Products = () => {
   const MY_API_KEY = "https://695cdeec79f2f34749d62810.mockapi.io/products";
@@ -13,6 +13,7 @@ const Products = () => {
   let [loading, setLoading] = useState(true);
   let [search, setSearch] = useState("");
   let [category, setCategory] = useState("");
+  const { theme } = useTheme();
 
   useEffect(() => {
     async function fetchData() {
@@ -98,7 +99,7 @@ const Products = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="px-4 py-6 md:px-10 md:py-10 bg-gray-50 min-h-screen">
+    <div className={`px-4 py-6 md:px-10 md:py-10 min-h-screen ${theme === "dark" ? "bg-slate-800 text-white" : "bg-white text-slate-800"}`}>
       {/* Search & Filter */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <form
@@ -124,7 +125,7 @@ const Products = () => {
         </form>
 
         <select
-          className="p-2 rounded-md w-full md:w-1/4 border border-gray-300"
+          className={`p-2 rounded-md w-full md:w-1/4 border border-gray-300 ${theme === "dark" ? "bg-slate-800 text-white" : "bg-white text-slate-800"}`}
           value={category}
           onChange={(e) => handleCategoryChange(e.target.value)}
         >
@@ -142,14 +143,14 @@ const Products = () => {
         {filteredData.map((product) => (
           <div
             key={product.id}
-            className="bg-stone-100 rounded-lg shadow-lg border border-gray-200 p-4 flex flex-col items-center gap-3 transition-colors"
+            className={`rounded-lg shadow-lg border border-gray-200 p-4 flex flex-col items-center gap-3 transition-colors ${theme === "dark" ? "bg-slate-900 text-white" : "bg-white text-slate-700"}`}
           >
             <img
               src={product.images[0]}
               alt={product.title}
               className="w-full h-48 object-cover rounded-md"
             />
-            <h2 className="font-semibold text-lg text-black text-center">
+            <h2 className="font-semibold text-lg text-center">
               {product.title}
             </h2>
             <p className="text-violet-600 font-bold">${product.price}</p>

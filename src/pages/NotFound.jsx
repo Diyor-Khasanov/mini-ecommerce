@@ -1,10 +1,13 @@
 import { BadgeX } from 'lucide-react'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import useTheme from '../context/useTheme'
 
 const NotFound = () => {
+  const {theme} = useTheme();
+  
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
+    <div className={`flex flex-col items-center justify-center h-screen ${theme === "dark" ? "bg-slate-800 text-white" : "bg-white text-slate-800"}`}>
       <h1 className='text-6xl font-bold flex items-center'>
         4
         <BadgeX className='w-12 h-12' />

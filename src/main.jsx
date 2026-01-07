@@ -8,6 +8,7 @@ import Cart from "./pages/Cart.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Products from "./pages/Products.jsx";
 import Details from "./pages/Details.jsx";
+import ThemeProvider from "./context/ThemeProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,5 +40,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <ThemeProvider>
+    <RouterProvider router={router} />
+  </ThemeProvider>
 );

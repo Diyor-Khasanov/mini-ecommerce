@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../components/Header";
 import { X } from "lucide-react";
 import Loading from "../components/Loading";
+import useTheme from "../context/useTheme"
 
 const MY_API_KEY = "https://695cdeec79f2f34749d62810.mockapi.io/products";
 
-export default function CartPage() {
+const CartPage = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {theme} = useTheme();
 
   const getCart = async () => {
     try {
@@ -51,21 +52,21 @@ export default function CartPage() {
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className={`bg-slate-50 min-h-screen cart ${theme === "dark" ? "bg-slate-800 text-white" : "bg-white text-slate-800"}`}>
 
       <div className="max-w-5xl mx-auto px-4 py-10">
-        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+        <div className={`rounded-2xl shadow-lg p-6 md:p-10 ${theme === "dark" ? "bg-slate-800 text-white" : "bg-white text-slate-800"}`}>
           <h1 className="text-2xl font-bold mb-8">Cart</h1>
 
           {cart.length === 0 ? (
-            <p className="text-gray-500">Your cart is empty 🛒</p>
+            <p className="text-slate-500">Your cart is empty 🛒</p>
           ) : (
             <>
               <div className="space-y-6">
                 {cart.map((item) => (
                   <div
                     key={item.id}
-                    className="grid grid-cols-1 md:grid-cols-[100px_1fr_120px_100px_40px] items-center gap-4"
+                    className={`grid grid-cols-1 md:grid-cols-[100px_1fr_120px_100px_40px] items-center gap-4 ${theme === "dark" ? "bg-slate-800 text-white" : "bg-white text-slate-800"}`}
                   >
                     <img
                       src={item.thumbnail}
@@ -75,7 +76,7 @@ export default function CartPage() {
 
                     <div>
                       <h2 className="font-semibold">{item.title}</h2>
-                      <p className="text-sm text-gray-500">{item.brand}</p>
+                      <p className="text-sm text-slate-500">{item.brand}</p>
                       <p className="text-sm mt-1">${item.price}</p>
                     </div>
 
@@ -116,7 +117,7 @@ export default function CartPage() {
               </div>
 
               {/* Summary */}
-              <div className="border-t mt-8 pt-6 space-y-3">
+              <div className={`border-t mt-8 pt-6 space-y-3 ${theme === "dark" ? "bg-slate-800 text-white" : "bg-white text-slae-800"}`}>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Subtotal</span>
                   <span>${subtotal.toFixed(2)}</span>
@@ -148,3 +149,5 @@ export default function CartPage() {
     </div>
   );
 }
+
+export default CartPage;

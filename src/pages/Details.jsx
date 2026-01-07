@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
+import useTheme from "../context/useTheme";
 
 const Details = () => {
   const MY_API_KEY = "https://695cdeec79f2f34749d62810.mockapi.io/products";
-
+  
+  const {theme} = useTheme();
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
@@ -64,30 +66,30 @@ const Details = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="max-w-12xl mx-auto px-4 py-10">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+      <div className="max-w-12xl mx-auto my-auto px-4 py-10">
+        <div className={`flex flex-col md:flex-row items-center md:items-start gap-8 ${theme === "dark" ? "bg-slate-800 text-white" : "bg-white text-slate-800"}`}>
           {/* Product Image */}
           <div className="flex-1 w-full md:w-auto flex justify-center">
             <img
               src={product.thumbnail}
               alt={product.title}
-              className="w-full max-w-2xl rounded-xl shadow-lg object-cover"
+              className="w-full max-w-md rounded-xl shadow-lg object-cover"
             />
           </div>
 
           {/* Product Details */}
           <div className="flex-1 flex flex-col gap-4 w-full">
-            <h1 className="text-3xl md:text-4xl font-bold text-black">
+            <h1 className="text-3xl md:text-4xl font-bold">
               {product.title}
             </h1>
             <p className="text-xl font-semibold text-violet-600">
               ${product.price}
             </p>
-            <p className="text-black">
+            <p>
               Brand: {product.brand || "No Brand available"}
             </p>
-            <p className="text-black">Category: {product.category}</p>
-            <p className="text-black">{product.description}</p>
+            <p>Category: {product.category}</p>
+            <p>{product.description}</p>
 
             {/* Add to Cart Button */}
             <button
